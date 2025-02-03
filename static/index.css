@@ -1,0 +1,152 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.nav{
+    height: 5rem;
+    width: auto;
+    border: 1px solid transparent;
+    text-align: center;
+    /* margin: auto; */
+    color: white;
+    background-color: rgb(255, 58, 58);
+}
+/* Your Existing CSS */
+.menu {
+    max-height: 45rem;
+    height: auto;
+    width: auto;
+    text-align: center;
+    color: white;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+}
+
+.menu-btn {
+    height: 3rem;
+    width: auto;
+    background-color: rgb(240, 72, 72);
+    color: white;
+    margin: auto;
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+    font-size: large;
+    margin-top: 3rem;
+}
+
+.menu-btn:hover {
+    background-color: rgb(255, 101, 101);
+}
+
+.type_func {
+    color: black;
+    text-align: center;
+}
+
+input::file-selector-button {
+    height: 3em;
+    width: 11.2rem;
+    background-color: rgb(225, 225, 225);
+    font-weight: bold;
+    color: rgb(25, 132, 247);
+    padding: 0.5em;
+    border: thin solid grey;
+    margin-top: 1em;
+    margin-left: 1.6em;
+    text-align: left;
+    border: thin solid grey
+    
+}
+
+form label {
+    color: black;
+    font-size: larger;
+}
+
+.up-btn{
+    margin: auto;
+}
+
+.name {
+    height: 2rem;
+    width: auto;
+    padding-left: 1rem;
+    border: thin solid grey;
+    border-radius: 0.5em;
+    margin-top: 1em;
+    margin-left: -2em;
+}
+
+/* This .table class is used for your table container */
+.table {
+    text-align: center;
+    margin: auto;
+    padding: 1rem;
+}
+.td-2{
+    overflow: hidden;
+    justify-content: center;
+    text-align: center;
+}
+/* Responsive CSS */
+
+/* For medium-sized screens */
+@media (max-width: 768px) {
+    .menu {
+        padding: 0 1rem;
+    }
+    .menu-btn {
+        width: 90%;  /* Make button take up more width on smaller screens */
+        margin-top: 1rem;
+    }
+    form label,
+    .name {
+        font-size: 1rem;  /* Slightly smaller font sizes */
+    }
+    /* Make sure the table can scroll horizontally if needed */
+    .table {
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+    }
+}
+
+/* For small screens */
+@media (max-width: 480px) {
+    .menu-btn {
+        font-size: medium;
+        margin-left: 1.5em;
+    }
+    input::file-selector-button {
+        font-size: 1em;
+        padding: 0.3em;
+        height:4em;
+        width: 20.8em;
+        background-color: rgb(225, 225, 225);
+        font-weight: bold;
+        color: rgb(25, 132, 247);
+        padding: 0.5em;
+        border: thin solid grey;
+        border-radius: 0.5em;
+        margin-top: 1em;
+        margin-left: 3.9em;
+    }
+    /* Reduce table font size for better fit */
+    .table {
+        font-size: 0.9em;
+        text-align: center;
+        justify-content: center;
+    }
+    .name{
+        height: 2rem;
+        width: auto;
+        padding-left: 1rem;
+        border: thin solid grey;
+        border-radius: 0.5em;
+        margin-top: 1em;
+        margin-left: 0px;
+    }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Type Converter</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+</head>
+<body>
+    <div class="nav">
+        <h3> File Converter </h3>
+    </div>
+    <div class="menu">
+        <button class="menu-btn" onclick="redirect('1')">Images to PDF</button>
+        <button class="menu-btn">Word to PDF</button>
+        <button class="menu-btn">PPT to PDF</button>
+        <button class="menu-btn">PDF to Word</button>
+        <button class="menu-btn">PDF to PPT</button>
+        <button class="menu-btn">MP4 to MP3</button>
+        <button class="menu-btn">Music Download (link)</button>
+        <button class="menu-btn">Video Download (link)</button>
+        
+    </div>
+
+
+    <script>
+        function redirect(x){
+
+            if(x == 1){
+                window.location.href = "/upload-image-to-pdf";
+            }
+        }
+    </script>
+</body>
+</html>
