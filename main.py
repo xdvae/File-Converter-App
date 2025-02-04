@@ -1,8 +1,6 @@
-from flask import Flask,render_template,request,send_file,after_this_request
-import os
+from flask import Flask,render_template,request,send_file
 from PIL import Image, ImageOps
-
-
+from io import BytesIO
 
 # Upload folder / allowed ext.
 UPLOAD = 'uploads'
@@ -10,28 +8,6 @@ ALLOWED_EXT = {'pdf','png','jpeg','jpg'}
 
 app = Flask(__name__)
 app.config['uploads'] = UPLOAD
-
-# Download Function
-def send_file_to_download(name_of_pdf,name_by_user):
-    print("It triggered this")
-
-    @after_this_request
-    def remove_file(response):
-        try:
-            os.remove(name_of_pdf)  
-            print(f"Deleted: x")  
-        except Exception as e:
-            print(f"Error deleting file: {e}")
-        return response
-    
-    response = send_file(
-        name_of_pdf, 
-        as_attachment=True,
-        mimetype='application/pdf',
-        download_name=f"{name_by_user}.pdf"
-        )
-    
-    return response
 
 # Check Allowed Files
 def allowed_file(filename):
@@ -56,7 +32,6 @@ def upload():
         # Make PDF func.
         def make_pdf():
             Images = []
-            pdf_name = os.path.join(app.config['uploads'], "My_PDF.pdf")
 
             for file in files:
                 if file.filename == '':
@@ -69,10 +44,16 @@ def upload():
                     else:
                         return "<h1>Files Uploaded Failed. Extension Not Allowed!</h1>"
                     if Images:
-                        Images[0].save(pdf_name, save_all=True,append_images=Images[1:])
+                        pdf_buffer = BytesIO()
+                        Images[0].save(pdf_buffer, format="PDF",save_all=True,append_images=Images[1:])
+                        pdf_buffer.seek(0)
                     
-            return send_file_to_download(pdf_name, user_file_name)
-            
+            return send_file(
+                pdf_buffer,
+                mimetype='application/pdf',
+                as_attachment=True,
+                download_name=f"{user_file_name}.pdf"
+            )
         return make_pdf() # Return will send Download req to browser.
     
 
