@@ -1,152 +1,255 @@
-body{
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-.nav{
-    height: 5rem;
-    width: auto;
-    border: 1px solid transparent;
-    text-align: center;
-    /* margin: auto; */
-    color: white;
-    background-color: rgb(255, 58, 58);
-}
-/* Your Existing CSS */
-.menu {
-    max-height: 45rem;
-    height: auto;
-    width: auto;
-    text-align: center;
-    color: white;
-    flex-direction: column;
-    display: flex;
-    justify-content: center;
+/* =====================================================
+   Common Styles (applied on both pages)
+===================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  background: linear-gradient(270deg, #1e1e1e, #2a2a2a, #1e1e1e);
+  background-size: 600% 600%;
+  animation: gradientAnimation 16s ease infinite;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #ffffff;
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glassmorphism Container */
+.container {
+  background: rgba(20, 20, 20, 0.85);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+/* Header with Animated RGB Border */
+.header {
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid;
+  border-image-slice: 1;
+  border-width: 2px;
+  animation: borderAnimation 5s linear infinite;
+}
+
+@keyframes borderAnimation {
+  0%   { border-image-source: linear-gradient(45deg, #ff0000, #00ff00); }
+  33%  { border-image-source: linear-gradient(45deg, #00ff00, #0000ff); }
+  66%  { border-image-source: linear-gradient(45deg, #0000ff, #ff00ff); }
+  100% { border-image-source: linear-gradient(45deg, #ff00ff, #ff0000); }
+}
+
+.header h1 {
+  font-size: 28px;
+  letter-spacing: 1.2px;
+}
+
+/* Common Button Style */
 .menu-btn {
-    height: 3rem;
-    width: auto;
-    background-color: rgb(240, 72, 72);
-    color: white;
-    margin: auto;
-    border-radius: 0.5rem;
-    border: 1px solid transparent;
-    transition: all 0.2s ease-in-out;
-    font-size: large;
-    margin-top: 3rem;
+  background: linear-gradient(45deg, #333, #444);
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-btn::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 10%, transparent 10%);
+  background-size: 10px 10px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.menu-btn:hover::before {
+  opacity: 1;
 }
 
 .menu-btn:hover {
-    background-color: rgb(255, 101, 101);
+  transform: scale(1.03);
+  background: linear-gradient(45deg, #444, #555);
 }
 
-.type_func {
-    color: black;
-    text-align: center;
+.menu-btn:active {
+  transform: scale(0.98);
 }
 
-input::file-selector-button {
-    height: 3em;
-    width: 11.2rem;
-    background-color: rgb(225, 225, 225);
-    font-weight: bold;
-    color: rgb(25, 132, 247);
-    padding: 0.5em;
-    border: thin solid grey;
-    margin-top: 1em;
-    margin-left: 1.6em;
-    text-align: left;
-    border: thin solid grey
-    
+/* =====================================================
+   Page-Specific Styles
+===================================================== */
+
+/* --- Home Page Specific --- */
+.home .menu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-form label {
-    color: black;
-    font-size: larger;
+/* --- Get Data Page Specific --- */
+.getdata .type_func {
+  font-size: 22px;
+  margin-bottom: 20px;
 }
 
-.up-btn{
-    margin: auto;
+.getdata .form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
 }
 
-.name {
-    height: 2rem;
-    width: auto;
-    padding-left: 1rem;
-    border: thin solid grey;
-    border-radius: 0.5em;
-    margin-top: 1em;
-    margin-left: -2em;
+.getdata label {
+  font-size: 16px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 5px;
 }
 
-/* This .table class is used for your table container */
-.table {
-    text-align: center;
-    margin: auto;
-    padding: 1rem;
+.getdata .input-field,
+.getdata .file-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 16px;
 }
-.td-2{
-    overflow: hidden;
+
+/* New Drag & Drop Area (for Get Data Page) */
+.getdata .drop-area {
+  border: 2px dashed #555;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 15px;
+}
+
+.getdata .drop-area.highlight {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* =====================================================
+   Responsive Adjustments
+===================================================== */
+@media (max-width: 600px) {
+  .container {
+    max-width: 90%;
+  }
+}
+/* =====================================================
+   Error Page Specific Styles
+===================================================== */
+.error .container {
+  /* Optionally override container styles for error page if needed */
+  max-width: 450px;
+}
+
+.error .header {
+  /* Change the header color or border to emphasize an error */
+  border-bottom: 2px solid #ff5555;
+  animation: none; /* Remove the RGB animation if preferred */
+}
+
+.error .header h1 {
+  color: #ff5555;
+  font-size: 32px;
+}
+
+.error .error-message {
+  font-size: 18px;
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(255, 85, 85, 0.15);
+  border: 1px solid #ff5555;
+  border-radius: 8px;
+  color: #ffcccc;
+  text-align: center;
+}
+
+.error .error-actions {
+  margin-top: 20px;
+}
+
+.error .error-actions .menu-btn {
+  /* You can adjust the button styling if you want it different for errors */
+  background: linear-gradient(45deg, #ff5555, #ff7777);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.error .error-actions .menu-btn:hover {
+  transform: scale(1.03);
+  background: linear-gradient(45deg, #ff7777, #ff5555);
+}
+/* =====================================================
+   Coming Soon Page Specific Styles
+===================================================== */
+.comingsoon .coming-content {
+  font-size: 18px;
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #888;
+  border-radius: 8px;
+  color: #ddd;
+  text-align: center;
+}
+
+.comingsoon .coming-content p {
+  margin-bottom: 20px;
+}
+.comingsoon .coming-content a{
+  text-decoration: none;
+}
+.comingsoon .button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  
+}
+
+@media (min-width: 480px) {
+  .comingsoon .button-group {
+    flex-direction: row;
     justify-content: center;
-    text-align: center;
-}
-/* Responsive CSS */
-
-/* For medium-sized screens */
-@media (max-width: 768px) {
-    .menu {
-        padding: 0 1rem;
-    }
-    .menu-btn {
-        width: 90%;  /* Make button take up more width on smaller screens */
-        margin-top: 1rem;
-    }
-    form label,
-    .name {
-        font-size: 1rem;  /* Slightly smaller font sizes */
-    }
-    /* Make sure the table can scroll horizontally if needed */
-    .table {
-        width: 100%;
-        overflow-x: auto;
-        display: block;
-    }
+  }
 }
 
-/* For small screens */
-@media (max-width: 480px) {
-    .menu-btn {
-        font-size: medium;
-        margin-left: 1.5em;
-    }
-    input::file-selector-button {
-        font-size: 1em;
-        padding: 0.3em;
-        height:4em;
-        width: 20.8em;
-        background-color: rgb(225, 225, 225);
-        font-weight: bold;
-        color: rgb(25, 132, 247);
-        padding: 0.5em;
-        border: thin solid grey;
-        border-radius: 0.5em;
-        margin-top: 1em;
-        margin-left: 3.9em;
-    }
-    /* Reduce table font size for better fit */
-    .table {
-        font-size: 0.9em;
-        text-align: center;
-        justify-content: center;
-    }
-    .name{
-        height: 2rem;
-        width: auto;
-        padding-left: 1rem;
-        border: thin solid grey;
-        border-radius: 0.5em;
-        margin-top: 1em;
-        margin-left: 0px;
-    }
-}

@@ -1,41 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Type Converter</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='index.css')}}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Converter - Get Data</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 </head>
-<body>
-    <div class="nav">
-        <h3> File Converter </h3>
+<body class="getdata">
+  <div class="container">
+    <header class="header">
+      <h1>File Converter</h1>
+    </header>
+    
+    <h2 class="type_func">{{ func_type }}</h2>
+
+    <div class="form-container">
+      <form method="post" enctype="multipart/form-data">
+        <label for="name">Enter a name for your file:</label>
+        <input type="text" id="name" name="name" placeholder="Eg. John_document" class="input-field" required>
+        
+        <label for="file">Select {{ file_type }} to upload:</label>
+        <input type="file" name="file" id="file" class="file-input" required multiple>
+
+        <button type="submit" class="menu-btn">Upload</button>
+      </form>
     </div>
-    <h1 class="type_func">{{func_type}}</h1>
-    <div class="menu">
-        <form method="post" enctype="multipart/form-data">
-            <table class="table">
-                <tr>
-                    <td><label for="name">Enter a name for your file:   </label></td>
-                </tr>
-                <tr>
-                    <td><input type="text" id="name" placeholder="Eg. John_document" class="name" name="name" required> <br><br></td>
-                </tr>
-                <tr>
-                    <td><label for="file">Select {{file_type}} to upload:   </label></td>
-                </tr>
-                <tr>
-                    <td class="td-2"><input type="file" name="file" class="custom-file-upload" id="file" required multiple><br><br></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><input type="submit" value="   Upload   " class="menu-btn up-btn"></td>
-                </tr>
-            </table>
-            <!-- <label for="name">Enter a name for your file:   </label>
-            <input type="text" id="name" placeholder="Eg. John_document" class="name"><br><br> -->
-            <!-- <label for="file">Select {{file_type}} to upload:   </label>
-            <input type="file" name="file" class="custom-file-upload" id="file"><br><br>
-            <input type="submit" value="   Upload   " class="menu-btn"> -->
-        </form>
-    </div>
+  </div>
+  <h3 id="drop" style="display: none;">{{drag_n_drop}}</h3>
+<script>
+    const drop = document.getElementById("drop").textContent;
+    
+</script>
 </body>
 </html>

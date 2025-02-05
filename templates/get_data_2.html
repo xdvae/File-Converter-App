@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>File Converter - Get Data</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body class="getdata">
+  <div class="container">
+    <header class="header">
+      <h1>File Converter</h1>
+    </header>
+    
+    <h2 class="type_func">{{ func_type }}</h2>
+
+    <div class="form-container">
+      <form method="post" enctype="multipart/form-data" id="uploadForm">
+        <label for="name">Enter a name for your file:</label>
+        <input type="text" id="name" name="name" placeholder="Eg. John_document" class="input-field" required>
+        
+        <label for="file">Select {{ file_type }} to upload:</label>
+        <!-- Hidden file input -->
+        <input type="file" name="file" id="file" class="file-input" required multiple style="display:none">
+        <!-- Drag & Drop Area -->
+        <div id="drop-area" class="drop-area" ondragover="handleDragOver(event)" ondrop="handleDrop(event)">
+          <p>Drag & drop your files here</p>
+          <p>or click to select files</p>
+        </div>
+        
+        <button type="submit" class="menu-btn" id="submit-btn">Upload</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function autosubmit(){
+      document.getElementById("uploadForm").submit()
+    }
+    // Get references to the drop area and hidden file input
+    const dropArea = document.getElementById('drop-area');
+    const fileInput = document.getElementById('file');
+
+    // When the drop area is clicked, trigger the file input
+    dropArea.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    // Update drop area when files are selected via dialog
+    fileInput.addEventListener('change', () => {
+      updateDropArea(fileInput.files);
+    });
+
+    // Prevent default behavior on dragover and add highlight class
+    function handleDragOver(event) {
+      event.preventDefault();
+      dropArea.classList.add('highlight');
+    }
+
+    // Handle the drop event
+    function handleDrop(event) {
+      event.preventDefault();
+      dropArea.classList.remove('highlight');
+      // Get the dropped files
+      const files = event.dataTransfer.files;
+      // Create a new DataTransfer object and add each file to it
+      const dt = new DataTransfer();
+      for (let i = 0; i < files.length; i++) {
+        dt.items.add(files[i]);
+      }
+      // Assign the files to the hidden file input
+      fileInput.files = dt.files;
+      updateDropArea(fileInput.files);
+
+      autosubmit()
+    }
+
+    // Update the drop area to show the names of selected files
+    function updateDropArea(files) {
+      if (files.length) {
+        const names = Array.from(files).map(file => file.name).join(', ');
+        dropArea.innerHTML = `<p>${names}</p>`;
+      } else {
+        dropArea.innerHTML = `<p>Drag & drop your files here</p><p>or click to select files</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
