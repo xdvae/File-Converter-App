@@ -165,6 +165,109 @@ body {
     max-width: 90%;
   }
 }
+
+/* CSS FOR POPUP */
+#popupModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* dark overlay */
+}
+#popupModal .modal-content {
+  background-color: #141414; /* your desired background color */
+  margin: 20% auto;
+  padding: 20px;
+  width: 300px;
+}
+#popupModal .modal-content p {
+  margin-bottom: 20px;
+}
+
+#popupModal button {
+  background-color: #333; /* button background color */
+  color: #fff;          /* button text color */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+#popupModal button:hover {
+  background-color: #555;
+  transform: scale(1.05);
+}
+#popupModal .modal-content p {
+  margin-bottom: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  #popupModal .modal-content {
+    width: 90%;
+    margin: 30% auto;
+  }
+}
+/* Loading Screen For Processing */
+/* Overlay container that covers the entire page */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 20, 20, 0.85); /* Dark, glassy background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+/* When .show is added, the overlay becomes visible */
+.overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Centered content inside overlay */
+.loader {
+  text-align: center;
+  color: #fff;
+}
+
+/* Spinner element with animation */
+.spinner {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 20px;
+  border: 5px solid #444;
+  border-top: 5px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Spinner rotation animation */
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Text animation (fade in) */
+.loader p {
+  font-size: 18px;
+  animation: fadeInText 1s ease;
+}
+
+@keyframes fadeInText {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 /* =====================================================
    Error Page Specific Styles
 ===================================================== */

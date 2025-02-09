@@ -22,12 +22,92 @@
         <label for="file">Select {{ file_type }} to upload:</label>
         <input type="file" name="file" id="file" class="file-input" required multiple>
 
-        <button type="submit" class="menu-btn">Upload</button>
+        <button type="submit" class="menu-btn" onclick="submitt()">Upload</button>
+        <input type="text" value="1" name="file_type" hidden>
       </form>
+      
+      <div id="popupModal" class="modal">
+        <div class="modal-content">
+          <p>The input field cannot be empty.</p>
+          <button id="modalOk" onclick="hide_popup()">OK</button>
+        </div>
+      </div>
+    
+    </div>
+    <!-- Loader Overlay -->
+<div id="loading-screen" class="overlay">
+  <div class="loader">
+    <div class="spinner"></div>
+    <p>Processing... Please wait.</p>
+  </div>
+</div>
+
+<!-- Done Overlay -->
+<div id="done-screen" class="overlay">
+  <div class="loader">
+    <p>Your file is being downloaded. This page will automatically refresh...</p>
+  </div>
+</div>
+  </div>
+
     </div>
   </div>
   <h3 id="drop" style="display: none;">{{drag_n_drop}}</h3>
 <script>
+
+  function submitt(){
+    showLoader();
+    check_download_cookie()
+  }
+      function check_download_cookie(){
+      if(document.cookie.indexOf("fileDownload=true") !== -1){
+        hideLoader()
+        showDone()
+        document.cookie = "fileDownload=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+      }
+      else{
+        setTimeout(check_download_cookie, 1000);
+      }
+    }
+
+      // Show the loader overlay
+    function showLoader() {
+      document.getElementById('loading-screen').classList.add('show');
+    }
+
+    // Hide the loader overlay
+    function hideLoader() {
+      document.getElementById('loading-screen').classList.remove('show');
+    }
+
+    // Show the done overlay, then hide it after 3 seconds
+    function showDone() {
+      document.getElementById('done-screen').classList.add('show');
+      setTimeout(function() {
+        document.getElementById('done-screen').classList.remove('show');
+      }, 3000);
+
+      setTimeout(function(){
+        location.reload();
+      },4000);
+    }
+
+    const form = document.getElementById('uploadForm');
+    const input = document.getElementById('name');
+    const modal = document.getElementById('popupModal');
+    const modalOk = document.getElementById('modalOk');
+
+    function show_popup() {
+      if (input.value.trim() === '') {
+        modal.style.display = 'block';
+      }
+    };
+
+    // When OK is clicked, hide the popup.
+    function hide_popup() {
+      modal.style.display = 'none';
+    };
     const drop = document.getElementById("drop").textContent;
     
 </script>
