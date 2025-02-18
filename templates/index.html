@@ -1,44 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>File Converter</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-</head>
-<body class="home">
-  <div class="container">
-    <header class="header">
-      <h1>File Converter</h1>
-    </header>
-    <div class="menu">
-      <button class="menu-btn" onclick="redirect(1)">Images to PDF</button>
-      <button class="menu-btn" onclick="redirect(2)">Word to PDF</button>
-      <button class="menu-btn" onclick="redirect(3)">PPT to PDF</button>
-      <button class="menu-btn" onclick="redirect(4)">PDF to Word</button>
-      <button class="menu-btn" onclick="redirect(5)">PDF to PPT</button>
-      <button class="menu-btn" onclick="redirect(6)">MP4 to MP3</button>
-      <button class="menu-btn" onclick="redirect(7)">Music Download (link)</button>
-      <button class="menu-btn" onclick="redirect(8)">Video Download (link)</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Converter</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='index.css') }}"
+    />
+  </head>
+  <body class="home">
+    <div class="container">
+      <header class="header">
+        <h1>File Converter</h1>
+      </header>
+      <div class="menu">
+        <button class="menu-btn working" onclick="redirect(1)">
+          Images to PDF
+        </button>
+        <button class="menu-btn working" onclick="redirect(2)">
+          Word to PDF
+        </button>
+        <button class="menu-btn" onclick="redirect(3)">PPT to PDF</button>
+        <button class="menu-btn" onclick="redirect(4)">PDF to Word</button>
+        <button class="menu-btn" onclick="redirect(5)">PDF to PPT</button>
+        <button class="menu-btn" onclick="redirect(6)">MP4 to MP3</button>
+        <button class="menu-btn" onclick="redirect(7)">
+          Music Download (link)
+        </button>
+        <button class="menu-btn" onclick="redirect(8)">
+          Video Download (link)
+        </button>
+      </div>
     </div>
-  </div>
 
-  <script>
-    function redirect(option) {
-      const routes = {
-        1: "/upload-image-to-pdf",
-        2: "/convert-word-to-pdf",
-        3: "/coming-soon", 
-        4: "/coming-soon",
-        5: "/coming-soon",
-        6: "/coming-soon",
-        7: "/coming-soon",
-        8: "/coming-soon"
-      };
-      if (routes[option]) {
-        window.location.href = routes[option];
+    <script>
+      function redirect(option) {
+        const routes = {
+          1: "/upload-image-to-pdf",
+          2: "/convert-word-to-pdf",
+          3: "/coming-soon",
+          4: "/coming-soon",
+          5: "/coming-soon",
+          6: "/coming-soon",
+          7: "/coming-soon",
+          8: "/coming-soon",
+        };
+        if (routes[option]) {
+          window.location.href = routes[option];
+        }
       }
-    }
-  </script>
-</body>
+    </script>
+  </body>
 </html>

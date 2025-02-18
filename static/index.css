@@ -11,7 +11,7 @@ body {
   background: linear-gradient(270deg, #1e1e1e, #2a2a2a, #1e1e1e);
   background-size: 600% 600%;
   animation: gradientAnimation 16s ease infinite;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,9 +20,15 @@ body {
 }
 
 @keyframes gradientAnimation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Glassmorphism Container */
@@ -49,10 +55,18 @@ body {
 }
 
 @keyframes borderAnimation {
-  0%   { border-image-source: linear-gradient(45deg, #ff0000, #00ff00); }
-  33%  { border-image-source: linear-gradient(45deg, #00ff00, #0000ff); }
-  66%  { border-image-source: linear-gradient(45deg, #0000ff, #ff00ff); }
-  100% { border-image-source: linear-gradient(45deg, #ff00ff, #ff0000); }
+  0% {
+    border-image-source: linear-gradient(45deg, #ff0000, #00ff00);
+  }
+  33% {
+    border-image-source: linear-gradient(45deg, #00ff00, #0000ff);
+  }
+  66% {
+    border-image-source: linear-gradient(45deg, #0000ff, #ff00ff);
+  }
+  100% {
+    border-image-source: linear-gradient(45deg, #ff00ff, #ff0000);
+  }
 }
 
 .header h1 {
@@ -82,25 +96,32 @@ body {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.15) 10%, transparent 10%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.15) 10%,
+    transparent 10%
+  );
   background-size: 10px 10px;
   opacity: 0;
   transition: opacity 0.5s ease;
 }
 
-.menu-btn:hover::before {
-  opacity: 1;
+.menu-btn.working {
+  position: relative; /* ensure we can absolutely position children */
 }
 
-.menu-btn:hover {
-  transform: scale(1.03);
-  background: linear-gradient(45deg, #444, #555);
+.menu-btn.working::after {
+  content: "Working";
+  position: absolute;
+  top: 5px; /* inside the button */
+  right: 5px; /* inside the button */
+  background: #28a745;
+  color: #fff;
+  padding: 2px 6px;
+  font-size: 12px;
+  border-radius: 4px;
+  z-index: 1; /* make sure it appears above the button background */
 }
-
-.menu-btn:active {
-  transform: scale(0.98);
-}
-
 /* =====================================================
    Page-Specific Styles
 ===================================================== */
@@ -157,6 +178,65 @@ body {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Below is the CSS for Alert box and Alert Image */
+.alert-box {
+  display: flex; /* Arrange items in a row */
+  align-items: center; /* Vertically center elements */
+  background-color: #e74c3c; /* Red background */
+  color: #fff; /* White text */
+  border-radius: 8px; /* Rounded corners */
+  max-width: 600px; /* Set max width */
+  width: 90%; /* Make it responsive */
+  margin: 20px auto; /* Center it */
+  padding: 12px;
+  box-sizing: border-box; /* Ensure proper spacing */
+  flex-wrap: wrap; /* Wrap on smaller screens */
+  flex-direction: row;
+}
+
+.alert-image {
+  width: 12rem; /* Image size */
+  height: 12rem;
+  background-image: url("sorry_2.png"); /* Replace with your actual image */
+  background-size: 150%; /* Cover the div completely */
+  background-position: -6.5rem; /* Center the image */
+  border-radius: 6px; /* Optional rounded corners */
+  flex-shrink: 0; /* Prevent shrinking */
+  /* border: 1px solid yellow;  */
+  margin: auto;
+  background-repeat: no-repeat;
+}
+
+.alert-text {
+  flex: 1; /* Take remaining space */
+  margin-left: 12px; /* Space between image and text */
+  font-size: 14px; /* Adjust text size */
+  line-height: 1.4; /* Improve readability */
+}
+
+.alert-text p {
+  margin: 0; /* Remove default spacing */
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .alert-box {
+    flex-direction: column; /* Stack elements */
+    text-align: center; /* Center text */
+  }
+
+  .alert-image {
+    width: 10rem;
+    height: 10rem;
+    margin-bottom: 8px; /* Add spacing */
+    background-position: -5.5rem; /* Center the image */
+  }
+
+  .alert-text {
+    margin-left: 0; /* Remove left margin */
+  }
+}
+/* CSS FOR ALERT BOX AND IMAGE ENDS HERE */
 /* =====================================================
    Responsive Adjustments
 ===================================================== */
@@ -188,7 +268,7 @@ body {
 
 #popupModal button {
   background-color: #333; /* button background color */
-  color: #fff;          /* button text color */
+  color: #fff; /* button text color */
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
@@ -253,8 +333,12 @@ body {
 
 /* Spinner rotation animation */
 @keyframes spin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Text animation (fade in) */
@@ -264,8 +348,12 @@ body {
 }
 
 @keyframes fadeInText {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* =====================================================
@@ -338,7 +426,7 @@ body {
 .comingsoon .coming-content p {
   margin-bottom: 20px;
 }
-.comingsoon .coming-content a{
+.comingsoon .coming-content a {
   text-decoration: none;
 }
 .comingsoon .button-group {
@@ -346,7 +434,6 @@ body {
   flex-direction: column;
   gap: 15px;
   align-items: center;
-  
 }
 
 @media (min-width: 480px) {
@@ -355,4 +442,3 @@ body {
     justify-content: center;
   }
 }
-

@@ -1,204 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>File Converter - Get Data</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-  <style>
-    /* Hide the default file input */
-    .file-input {
-      display: none;
-    }
-    /* Optional styling for the drop area highlight */
-    .drop-area.highlight {
-      border-color: #333;
-      background-color: #f0f0f0;
-    }
-  </style>
-</head>
-<body class="getdata">
-  <div class="container">
-    <header class="header">
-      <h1>File Converter</h1>
-    </header>
-    
-    <h2 class="type_func">{{ func_type }}</h2>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Converter - Get Data</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='index.css') }}"
+    />
+    <style>
+      /* Hide the default file input */
+      .file-input {
+        display: none;
+      }
+      /* Optional styling for the drop area highlight */
+      .drop-area.highlight {
+        border-color: #333;
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body class="getdata">
+    <div class="container">
+      <header class="header">
+        <h1>File Converter</h1>
+      </header>
 
-    <div class="form-container">
-      <form method="post" enctype="multipart/form-data" id="uploadForm">
-        <label for="name">Enter a name for your file:</label>
-        <input type="text" id="name" name="name" placeholder="Eg. John_document" class="input-field" required>
-        
-        <label for="file">Select {{ file_type }} to upload:</label>
-        <!-- Hidden file input -->
-        <input type="file" name="file" id="file" class="file-input" required 
-               accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
-        <!-- Drag & Drop Area -->
-        <div id="drop-area" class="drop-area" 
-             ondragover="handleDragOver(event)" 
-             ondrop="handleDrop(event)" 
-             ondragleave="handleDragLeave(event)">
-          <p>Drag & drop your files here</p>
-          <p>or click to select files</p>
+      <h2 class="type_func">{{ func_type }}</h2>
+
+      <div class="form-container">
+        <form method="post" enctype="multipart/form-data" id="uploadForm">
+          <label for="name">Enter a name for your file:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Eg. John_document"
+            class="input-field"
+            required
+          />
+
+          <label for="file">Select {{ file_type }} to upload:</label>
+          <!-- Hidden file input -->
+          <input
+            type="file"
+            name="file"
+            id="file"
+            class="file-input"
+            required
+            accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          />
+          <!-- Drag & Drop Area -->
+          <div
+            id="drop-area"
+            class="drop-area"
+            ondragover="handleDragOver(event)"
+            ondrop="handleDrop(event)"
+            ondragleave="handleDragLeave(event)"
+          >
+            <p>Drag & drop your files here</p>
+            <p>or click to select files</p>
+          </div>
+
+          <button
+            type="submit"
+            class="menu-btn"
+            id="submit-btn"
+            onclick="autosubmit()"
+          >
+            Upload
+          </button>
+          <input type="text" value="2" name="file_type" hidden />
+        </form>
+        <!-- Temp alert box below. Comment it out when issue fixed -->
+        <div class="alert-box">
+          <div class="alert-image"></div>
+          <div class="alert-text">
+            <p>
+              Currently experiencing issues with the images in Word to PDF
+              conversion. I will fix this soon!
+            </p>
+          </div>
         </div>
-        
-        <button type="submit" class="menu-btn" id="submit-btn" onclick="autosubmit()">Upload</button>
-        <input type="text" value="2" name="file_type" hidden>
-      </form>
 
-      <div id="popupModal" class="modal">
-        <div class="modal-content">
-          <p>The input field cannot be empty.</p>
-          <button id="modalOk" onclick="hide_popup()">OK</button>
+        <div id="popupModal" class="modal">
+          <div class="modal-content">
+            <p>The input field cannot be empty.</p>
+            <button id="modalOk" onclick="hide_popup()">OK</button>
+          </div>
         </div>
       </div>
-    
+      <!-- Loader Overlay -->
+      <div id="loading-screen" class="overlay">
+        <div class="loader">
+          <div class="spinner"></div>
+          <p>Processing... Please wait.</p>
+        </div>
+      </div>
+
+      <!-- Done Overlay -->
+      <div id="done-screen" class="overlay">
+        <div class="loader">
+          <p>
+            Your file is being downloaded. This page will automatically
+            refresh...
+          </p>
+        </div>
+      </div>
     </div>
-    <!-- Loader Overlay -->
-<div id="loading-screen" class="overlay">
-  <div class="loader">
-    <div class="spinner"></div>
-    <p>Processing... Please wait.</p>
-  </div>
-</div>
 
-<!-- Done Overlay -->
-<div id="done-screen" class="overlay">
-  <div class="loader">
-    <p>Your file is being downloaded. This page will automatically refresh...</p>
-  </div>
-</div>
-  </div>
-
-  <script>
-    //  Cookie thing
-    function check_download_cookie(){
-      if(document.cookie.indexOf("fileDownload=true") !== -1){
-        hideLoader()
-        showDone()
-        document.cookie = "fileDownload=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
+    <script>
+      //  Cookie thing
+      function check_download_cookie() {
+        if (document.cookie.indexOf("fileDownload=true") !== -1) {
+          hideLoader();
+          showDone();
+          document.cookie =
+            "fileDownload=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        } else {
+          setTimeout(check_download_cookie, 1000);
+        }
       }
-      else{
-        setTimeout(check_download_cookie, 1000);
-      }
-    }
 
       // Show the loader overlay
-    function showLoader() {
-      document.getElementById('loading-screen').classList.add('show');
-    }
-
-    // Hide the loader overlay
-    function hideLoader() {
-      document.getElementById('loading-screen').classList.remove('show');
-    }
-
-    // Show the done overlay, then hide it after 3 seconds
-    function showDone() {
-      document.getElementById('done-screen').classList.add('show');
-      setTimeout(function() {
-        document.getElementById('done-screen').classList.remove('show');
-      }, 3000);
-
-      setTimeout(function(){
-        location.reload();
-      },4000);
-    }
-
-
-
-    const form = document.getElementById('uploadForm');
-    const input = document.getElementById('name');
-    const modal = document.getElementById('popupModal');
-    const modalOk = document.getElementById('modalOk');
-
-
-    function show_popup() {
-      if (input.value.trim() === '') {
-        modal.style.display = 'block';
+      function showLoader() {
+        document.getElementById("loading-screen").classList.add("show");
       }
-    };
 
-    // When OK is clicked, hide the popup.
-    function hide_popup() {
-      modal.style.display = 'none';
-    };
-    // Function to submit the form automatically
-    function autosubmit() {
-      if (input.value.trim() === '') {
-        modal.style.display = 'block';
+      // Hide the loader overlay
+      function hideLoader() {
+        document.getElementById("loading-screen").classList.remove("show");
       }
-      else{
-        document.getElementById("uploadForm").submit();
-        showLoader();
-        check_download_cookie();
+
+      // Show the done overlay, then hide it after 3 seconds
+      function showDone() {
+        document.getElementById("done-screen").classList.add("show");
+        setTimeout(function () {
+          document.getElementById("done-screen").classList.remove("show");
+        }, 3000);
+
+        setTimeout(function () {
+          location.reload();
+        }, 4000);
       }
-      
-    }
 
-    // Get references to the drop area and hidden file input
-    const dropArea = document.getElementById('drop-area');
-    const fileInput = document.getElementById('file');
+      const form = document.getElementById("uploadForm");
+      const input = document.getElementById("name");
+      const modal = document.getElementById("popupModal");
+      const modalOk = document.getElementById("modalOk");
 
-    // When the drop area is clicked, trigger the hidden file input
-    dropArea.addEventListener('click', () => {
-      fileInput.click();
-    });
-
-    // Update drop area when files are selected via the file dialog
-    fileInput.addEventListener('change', () => {
-      updateDropArea(fileInput.files);
-    });
-
-    // Prevent default behavior on dragover and add highlight class
-    function handleDragOver(event) {
-      event.preventDefault();
-      dropArea.classList.add('highlight');
-    }
-
-    // Remove highlight when dragging leaves the drop area
-    function handleDragLeave(event) {
-      event.preventDefault();
-      dropArea.classList.remove('highlight');
-    }
-
-    // Handle the drop event
-    function handleDrop(event) {
-      event.preventDefault();
-      dropArea.classList.remove('highlight');
-      
-      // Get the dropped files from the event
-      const files = event.dataTransfer.files;
-      
-      // Create a new DataTransfer object and add each file to it
-      const dt = new DataTransfer();
-      for (let i = 0; i < files.length; i++) {
-        dt.items.add(files[i]);
+      function show_popup() {
+        if (input.value.trim() === "") {
+          modal.style.display = "block";
+        }
       }
-      
-      // Assign the dropped files to the hidden file input
-      fileInput.files = dt.files;
-      
-      // Update the drop area display with file names
-      updateDropArea(fileInput.files);
-      
-      // Automatically submit the form after dropping a file
-      autosubmit();
-    }
 
-    // Update the drop area to show the names of selected files
-    function updateDropArea(files) {
-      if (files.length) {
-        const names = Array.from(files)
-                           .map(file => file.name)
-                           .join(', ');
-        dropArea.innerHTML = `<p>${names}</p>`;
-      } else {
-        dropArea.innerHTML = `<p>Drag & drop your files here</p><p>or click to select files</p>`;
+      // When OK is clicked, hide the popup.
+      function hide_popup() {
+        modal.style.display = "none";
       }
-    }
-  </script>
-</body>
+      // Function to submit the form automatically
+      function autosubmit() {
+        if (input.value.trim() === "") {
+          modal.style.display = "block";
+        } else {
+          document.getElementById("uploadForm").submit();
+          showLoader();
+          check_download_cookie();
+        }
+      }
+
+      // Get references to the drop area and hidden file input
+      const dropArea = document.getElementById("drop-area");
+      const fileInput = document.getElementById("file");
+
+      // When the drop area is clicked, trigger the hidden file input
+      dropArea.addEventListener("click", () => {
+        fileInput.click();
+      });
+
+      // Update drop area when files are selected via the file dialog
+      fileInput.addEventListener("change", () => {
+        updateDropArea(fileInput.files);
+      });
+
+      // Prevent default behavior on dragover and add highlight class
+      function handleDragOver(event) {
+        event.preventDefault();
+        dropArea.classList.add("highlight");
+      }
+
+      // Remove highlight when dragging leaves the drop area
+      function handleDragLeave(event) {
+        event.preventDefault();
+        dropArea.classList.remove("highlight");
+      }
+
+      // Handle the drop event
+      function handleDrop(event) {
+        event.preventDefault();
+        dropArea.classList.remove("highlight");
+
+        // Get the dropped files from the event
+        const files = event.dataTransfer.files;
+
+        // Create a new DataTransfer object and add each file to it
+        const dt = new DataTransfer();
+        for (let i = 0; i < files.length; i++) {
+          dt.items.add(files[i]);
+        }
+
+        // Assign the dropped files to the hidden file input
+        fileInput.files = dt.files;
+
+        // Update the drop area display with file names
+        updateDropArea(fileInput.files);
+
+        // Automatically submit the form after dropping a file
+        autosubmit();
+      }
+
+      // Update the drop area to show the names of selected files
+      function updateDropArea(files) {
+        if (files.length) {
+          const names = Array.from(files)
+            .map((file) => file.name)
+            .join(", ");
+          dropArea.innerHTML = `<p>${names}</p>`;
+        } else {
+          dropArea.innerHTML = `<p>Drag & drop your files here</p><p>or click to select files</p>`;
+        }
+      }
+    </script>
+  </body>
 </html>

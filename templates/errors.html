@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Error - File Converter</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-</head>
-<body class="error">
-  <div class="container">
-    <header class="header">
-      <h1>Error</h1>
-    </header>
-    <div class="error-message">
-      <p>{{ ErrorMessage }}</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error - File Converter</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='index.css') }}"
+    />
+  </head>
+  <body class="error">
+    <div class="container">
+      <header class="header">
+        <h1>Error</h1>
+      </header>
+      <div class="error-message">
+        <p>{{ ErrorMessage }}</p>
+      </div>
+      <div class="error-actions">
+        <a href="/" class="menu-btn">Back to Home</a>
+      </div>
     </div>
-    <div class="error-actions">
-      <a href="/" class="menu-btn">Back to Home</a>
-    </div>
-  </div>
-</body>
+  </body>
 </html>
